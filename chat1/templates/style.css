@@ -1,0 +1,24 @@
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    display:flex;
+    justify-items: center;
+    align-items: center;
+  }
+  .centers {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    display:flex;
+    justify-items: center;
+    align-items: center;
+  }
+  /* .test {
+      display: flex;
+      flex-direction: column-reverse;
+      border: 1px solid black;
+  }
+  .test > div {
+    border: 1px solid green;
+  } */

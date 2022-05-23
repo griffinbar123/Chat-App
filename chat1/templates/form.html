@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Messaging</title>
+  </head>
+  <body>
+    <h1>{{ . }}</h1>
+    <div>
+      <form action="http://10.0.0.243:8080/sign-in" method="post">
+          <input type="text" name="Email" value="Email"/>
+          <input type="text" name="Use" value="Userame"/>
+          <input type="text" name="Password" value="Password"/>
+          <input type="submit">
+      </form>
+      <button onclick="location.href = 'http://10.0.0.243:8080/signup'" >SignUp</button>
+  </div>
+  </body>
+</html>

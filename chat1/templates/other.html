@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <style>
+          .center {
+    margin: auto;
+    width: 50%;
+    justify-items: center;
+    align-items: center;
+  }
+  .centers {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    display:flex;
+    justify-items: center;
+    align-items: center;
+  }
+  .test {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    overflow-y: auto;
+  }
+
+  .test > div {
+    border: 1px solid black;
+  }
+
+        </style>
+    </head>
+    <body style = "width: 100%; height: 100%; border: 1px; background-color: rgb(185, 194, 201);">
+    <button style="margin: 10px;" onclick="location.href = 'http://10.0.0.243:8080/signup'" >SignUp</button>
+    <button style="margin: 10px;" onclick="location.href = 'http://10.0.0.243:8080/signin'" >SignIn</button>
+    <div class="centers">
+      <form class="center" id="myForm" action="">
+        <label id = "message" style="margin: 6px;">Message</label>  
+        <input type="text" name="message"/>
+        <input type="submit">
+      </form> 
+    </div>
+    <div id = "cont" class = "test" cont style = "margin: 40px; width: 1200px; overflow: auto; background-color: rgb(227, 231, 233);">
+    </div>
+
+        <script> 
+        let ws = new WebSocket("ws://10.0.0.243:8080/ws");
+console.log("attemping your messages connect");
+ws.onopen = () => { 
+  console.log(" connected to messages");
+
+  }
+ws.onclose = (event) => {
+  console.log(" messages close: ", event);
+  ws.send("close");
+}
+ws.onerror = (error) => {console.log(" messages error: ", error);}
+ws.addEventListener("message", (event) => {
+console.log(event);
+
+const obj = JSON.parse(event.data)
+console.log(obj.username)
+
+if (obj.id == -1){
+    document.getElementById('cont').innerHTML = '';
+  } else{
+
+const messagediv = document.createElement("div");
+var user = document.createElement("h3");
+var msg = document.createElement("p");
+
+user.innerText = obj.username;
+console.log(messagediv);
+msg.innerText = obj.content;
+
+messagediv.style.cssText = "padding-left: 15px;padding-top: 5px;padding-bottom: 5px; margin: 5px; background-color: rgb(192, 149, 216);";
+
+document.getElementById('cont').appendChild(messagediv);
+messagediv.appendChild(user);
+messagediv.appendChild(msg);
+  }
+});
+
+const wrapper = document.querySelector('.centers'),
+      form    = wrapper.querySelectorAll('.center')
+      submit  = form[0].querySelector('input[type=submit]');
+
+function getdata(e){
+  e.preventDefault();
+  var formdata = new FormData(form[0]);
+  ws.send(formdata.get('message'));
+  var form1 = document.getElementById("myForm");
+  form1.reset();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  submit.addEventListener('click', getdata, false )
+})
+        </script>   
+    </body>
+</html>
